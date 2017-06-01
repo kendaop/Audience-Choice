@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Category;
+use App\Tag;
 
 class CategoryTagSeeder extends Seeder
 {
@@ -14,8 +15,16 @@ class CategoryTagSeeder extends Seeder
     {
         $categoryTags = config('seeds.categoryTags', []);
 
-        foreach ($categoryTags as $categoryId => $tagIds) {
-            Category::find($categoryId)->tags()->attach($tagIds);
+        if (empty($categoryTags)) {
+            $tagCount = Tag::all()->count();
+
+            Category::all()->each(function ($category) use ($tagCount) {
+                $category->tags()->attach([random_int(1, $tagCount)]);
+            });
+        } else {
+            foreach ($categoryTags as $categoryId => $tagIds) {
+                Category::find($categoryId)->tags()->attach($tagIds);
+            }
         }
     }
 }
