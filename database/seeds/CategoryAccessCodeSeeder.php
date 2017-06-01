@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\AccessCode;
+use App\Category;
 
 class CategoryAccessCodeSeeder extends Seeder
 {
@@ -11,15 +13,18 @@ class CategoryAccessCodeSeeder extends Seeder
      */
     public function run()
     {
-        $categoryIds = App\Category::orderBy('id')->select('id')->where('id', '>', 0)->get()->toArray();
+        $categoryIds = Category::orderBy('id')->select('id')->where('id', '>', 0)->get()->toArray();
         $index = 0;
 
-        App\AccessCode::all()->each(function($accessCode) use ($categoryIds, &$index) {
-
-            $accessCode->categories()->attach([
-                $categoryIds[$index++ % count($categoryIds)]['id'],
-                $categoryIds[$index++ % count($categoryIds)]['id']
-            ]);
+        AccessCode::all()->each(function ($accessCode) use ($categoryIds, &$index) {
+            if ($accessCode->id === 1) {
+                $accessCode->categories() -> attach(range(1, count($categoryIds)));
+            } else {
+                $accessCode->categories()->attach([
+                    $categoryIds[$index++ % count($categoryIds)]['id'],
+                    $categoryIds[$index++ % count($categoryIds)]['id']
+                ]);
+            }
         });
     }
 }
