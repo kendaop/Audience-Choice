@@ -13,7 +13,7 @@ return [
 
     'messages' => [
         'welcome'           => env('WELCOME_MESSAGE', ''),
-        'invalidSession'    => env('INVALID_SESSION_MESSAGE', ''),
-        'invalidAccessCode' => env('INVALID_CODE_MESSAGE', '')
+        'invalidSession'    => env('INVALID_SESSION_MESSAGE', 'Something went wrong. Please try again.'),
+        'invalidAccessCode' => env('INVALID_CODE_MESSAGE', 'Invalid Access Code')
     ],
 ];

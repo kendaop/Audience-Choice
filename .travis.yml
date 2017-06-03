@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 7.1
+
+before_script:
+  - cp .travis.env .env
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate
+
+before_install:
+  - mysql -e 'CREATE DATABASE test;'
+
+services:
+  - mysql
