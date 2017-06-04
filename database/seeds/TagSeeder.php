@@ -15,7 +15,7 @@ class TagSeeder extends Seeder
         $tags = config('seeds.tags', []);
 
         if (empty($tags)) {
-            factory(Tag::class, 20)->create();
+            factory(Tag::class, 5)->create();
         } else {
             foreach ($tags as $name => $description) {
                 factory(Tag::class)->create([

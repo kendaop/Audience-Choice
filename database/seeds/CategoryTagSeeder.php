@@ -17,9 +17,10 @@ class CategoryTagSeeder extends Seeder
 
         if (empty($categoryTags)) {
             $tagCount = Tag::all()->count();
+            $index = 0;
 
-            Category::all()->each(function ($category) use ($tagCount) {
-                $category->tags()->attach([random_int(1, $tagCount)]);
+            Category::all()->each(function ($category) use ($tagCount, $index) {
+                $category->tags()->attach(($index++ % $tagCount) + 1);
             });
         } else {
             foreach ($categoryTags as $categoryId => $tagIds) {

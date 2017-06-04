@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Category;
 use App\Film;
 use App\Vote;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -21,13 +22,10 @@ class BallotTest extends VotingAppTest
      */
     public function test_GET_Ballot_SquashedCategories_AllFilmNamesReferenceCategory0()
     {
-        $this->markTestSkipped('UI has changed. This test needs to be updated.');
-
         $this->withSession(['accessCodeId' => 1])
             ->get('ballot')
-            ->assertSee('id="category-1-film"')
-            ->assertSee('name="category-0-film"')
-            ->assertDontSee('name="category-1-film"');
+            ->assertSee('name="category-0-radios"')
+            ->assertDontSee('name="category-1-radios"');
     }
 
     /**
@@ -51,40 +49,17 @@ class BallotTest extends VotingAppTest
     /**
      * @group ballot
      */
-    public function test_GET_Ballot_VoteForFilmInAnotherViewableCategoryExists_FilmIsNotCheckedForThisCategory()
-    {
-        $this->markTestSkipped('UI has changed. This test needs to be updated.');
-
-        $this->insertDefaultVote([
-            'category_id'    => self::ALTERNATIVE_CATEGORY_ID,
-        ]);
-
-        $category1Name = 'category-' . self::DEFAULT_CATEGORY_ID . '-film';
-        $category2Name = 'category-' . self::ALTERNATIVE_CATEGORY_ID . '-film';
-        $badString = $category1Name . '" value="' . $this->film->id . '" checked';
-
-        $this->withSession([
-            'accessCodeId' => self::DEFAULT_ACCESS_CODE_ID
-        ])->get('ballot')
-            ->assertSee($category1Name)
-            ->assertSee($category2Name)
-            ->assertDontSee($badString);
-    }
-
-    /**
-     * @group ballot
-     */
     public function test_GET_Ballot_AllCategory_PopulatedWithAllFilms()
     {
-        $filmTitles = Film::get(['title'])->toArray();
-
         $response = $this->withSession([
-            'accessCodeId' => self::ALL_CATEGORY_ACCESS_CODE_ID
+            'accessCodeId' => config('vote.test.allCategory.accessCodeId')
         ])->get('ballot');
 
-        foreach ($filmTitles as $title) {
-            $response->assertSeeText($title['title']);
-        }
+        Category::all()->each(function($category) use ($response) {
+            $category->getFilms()->each(function($film) use ($response) {
+                $response->assertSeeText(htmlentities($film->title, ENT_QUOTES));
+            });
+        });
     }
 
     /**
