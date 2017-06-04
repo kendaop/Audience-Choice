@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Category;
 use App\Film;
 use App\Vote;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -54,8 +55,10 @@ class BallotTest extends VotingAppTest
             'accessCodeId' => config('vote.test.allCategory.accessCodeId')
         ])->get('ballot');
 
-        Film::all()->each(function($film) use ($response) {
-            $response->assertSeeText(htmlentities($film->title, ENT_QUOTES));
+        Category::all()->each(function($category) use ($response) {
+            $category->getFilms()->each(function($film) use ($response) {
+                $response->assertSeeText(htmlentities($film->title, ENT_QUOTES));
+            });
         });
     }
 
