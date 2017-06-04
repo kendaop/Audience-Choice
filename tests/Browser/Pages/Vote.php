@@ -3,8 +3,9 @@
 namespace Tests\Browser\Pages;
 
 use Laravel\Dusk\Browser;
+use Laravel\Dusk\Page as BasePage;
 
-class HomePage extends Page
+class Vote extends BasePage
 {
     /**
      * Get the URL for the page.
@@ -13,7 +14,7 @@ class HomePage extends Page
      */
     public function url()
     {
-        return '/';
+        return '/vote';
     }
 
     /**
@@ -24,7 +25,7 @@ class HomePage extends Page
      */
     public function assert(Browser $browser)
     {
-        //
+        $browser->assertPathIs($this->url());
     }
 
     /**
@@ -35,7 +36,9 @@ class HomePage extends Page
     public function elements()
     {
         return [
-            '@element' => '#selector',
+            'accessCodeInput' => 'input#accessCode',
+            'submitButton' => 'button#accessCodeSubmit',
+            'csrfToken' => 'input[name="_token"]'
         ];
     }
 }
