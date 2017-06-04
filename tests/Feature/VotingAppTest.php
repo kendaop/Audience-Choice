@@ -18,11 +18,7 @@ class VotingAppTest extends TestCase
 {
     protected $category, $film, $tags, $accessCode, $voteElem;
 
-    const DEFAULT_CATEGORY_ID = 1;
-    const DEFAULT_FILM_ID = 1;
-    const DEFAULT_ACCESS_CODE_ID = 1;
     const DEFAULT_TAG_IDS = [1, 2, 6, 8];
-    const ALL_CATEGORY_ACCESS_CODE_ID = 3;
 
     public function setUp()
     {
@@ -48,10 +44,10 @@ class VotingAppTest extends TestCase
 
     protected function retrieveDefaultProperties()
     {
-        $this->category = Category::find(self::DEFAULT_CATEGORY_ID);
-        $this->film = Film::find(self::DEFAULT_FILM_ID);
-        $this->tags = Tag::find(self::DEFAULT_TAG_IDS);
-        $this->accessCode = AccessCode::find(self::DEFAULT_ACCESS_CODE_ID);
+        $this->category = Category::find(config('vote.test.default.categoryId'));
+        $this->film = Film::find(config('vote.test.default.filmId'));
+        $this->tags = Tag::find(config('vote.test.default.tagId'));
+        $this->accessCode = AccessCode::find(config('vote.test.default.accessCodeId'));
         $this->voteElem = "category-{$this->category->id}-film";
     }
 }
