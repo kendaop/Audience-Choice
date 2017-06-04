@@ -48,6 +48,6 @@ class VotingAppTest extends TestCase
         $this->film = Film::find(config('vote.test.default.filmId'));
         $this->tags = Tag::find(config('vote.test.default.tagId'));
         $this->accessCode = AccessCode::find(config('vote.test.default.accessCodeId'));
-        $this->voteElem = "category-{$this->category->id}-film";
+        $this->voteElem = "category-{$this->category->id}-radios";
     }
 }
