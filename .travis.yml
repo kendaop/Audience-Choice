@@ -10,7 +10,7 @@ before_script:
   - php artisan migrate
 
 before_install:
-  - mysql -e 'CREATE DATABASE test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
 
 services:
   - mysql
