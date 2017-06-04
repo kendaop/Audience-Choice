@@ -16,4 +16,15 @@ return [
         'invalidSession'    => env('INVALID_SESSION_MESSAGE', ''),
         'invalidAccessCode' => env('INVALID_CODE_MESSAGE', '')
     ],
+
+    'test' => [
+        'default' => [
+            'accessCodeId' => env('DEFAULT_ACCESS_CODE_ID', 1),
+            'categoryId' => env('DEFAULT_CATEGORY_ID', 1),
+            'filmId' => env('DEFAULT_FILM_ID', 1)
+        ],
+        'allCategory' => [
+            'accessCodeId' => env('ALL_CATEGORY_ACCESS_CODE_ID', 1)
+        ]
+    ]
 ];
