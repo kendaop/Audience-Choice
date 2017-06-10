@@ -1,3 +1,14 @@
-.panel-title-film, .panel-title-category {
-  color: inherit;
+.panel-title-film a, .panel-title-category a {
+  color: #000000;
+  text-decoration: none;
+}
+
+input + .panel-title-film {
+  display: inline;
+}
+
+.poster-thumbnail img {
+  margin: 5px 5px -10px 5px;
+  float: left;
+  height: 140px;
 }

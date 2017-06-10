@@ -14,14 +14,18 @@ class CategorySeeder extends Seeder
     {
         $categories = config('seeds.categories', []);
 
-        foreach ($categories as $name => $description) {
-            factory(Category::class)->create([
-                'name'        => $name,
-                'description' => $description
-            ]);
+        if (empty($categories)) {
+            factory(Category::class, 10)->create();
+        } else {
+            foreach ($categories as $name => $description) {
+                factory(Category::class)->create([
+                    'name' => $name,
+                    'description' => $description
+                ]);
+            }
         }
 
-        if(config('vote.categories.squash')) {
+        if (config('vote.categories.squash')) {
             $this->createSquashedCategory();
         }
     }

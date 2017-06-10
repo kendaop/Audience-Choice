@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Tag;
 
 class TagSeeder extends Seeder
 {
@@ -13,11 +14,15 @@ class TagSeeder extends Seeder
     {
         $tags = config('seeds.tags', []);
 
-        foreach ($tags as $name => $description) {
-            factory(App\Tag::class)->create([
-                'name'        => $name,
-                'description' => $description
-            ]);
+        if (empty($tags)) {
+            factory(Tag::class, 5)->create();
+        } else {
+            foreach ($tags as $name => $description) {
+                factory(Tag::class)->create([
+                    'name' => $name,
+                    'description' => $description
+                ]);
+            }
         }
     }
 }
