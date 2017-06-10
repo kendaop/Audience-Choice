@@ -67,6 +67,34 @@ class BallotTest extends VotingAppTest
     /**
      * @group ballot
      */
+    public function test_GET_Ballot_UnsquashedCategories_AllCategoriesForAccessCodeAreVisible()
+    {
+        $response = $this->withSession(['accessCodeId' => $this->accessCode->id])->get('ballot');
+
+        Category::all()->each(function($category) use ($response) {
+            $response->assertSeeText($category->name);
+        });
+    }
+
+    /**
+     * @group ballot
+     */
+    public function test_GET_Ballot_SquashedCategories_AllCategoriesForAccessCodeAreVisible()
+    {
+        $this->squashedDbSetup();
+
+        $response = $this->withSession(['accessCodeId' => $this->accessCode->id])->get('ballot');
+
+        Category::all()->each(function($category) use ($response) {
+            if($category->name !== 'Squashed') {
+                $response->assertSeeText($category->name);
+            }
+        });
+    }
+
+    /**
+     * @group ballot
+     */
     public function test_GET_Ballot_FilmHasSquashedVote_InputIsAlreadyChecked()
     {
         $this->squashedDbSetup();

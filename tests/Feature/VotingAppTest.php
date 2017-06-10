@@ -48,14 +48,16 @@ class VotingAppTest extends TestCase
 
         Artisan::call('migrate:refresh');
         Artisan::call('db:seed');
+
+        $this->retrieveDefaultProperties();
     }
 
     protected function retrieveDefaultProperties()
     {
         $this->category = Category::find(config('vote.test.default.categoryId'));
-        $this->film = Film::find(config('vote.test.default.filmId'));
-        $this->tags = Tag::find(config('vote.test.default.tagId'));
-        $this->accessCode = AccessCode::find(config('vote.test.default.accessCodeId'));
+        $this->film = $this->category->getFilms()->first();
+        $this->tags = $this->category->tags();
+        $this->accessCode = $this->category->accessCodes()->first();
         $this->voteElem = "category-{$this->category->id}-radios";
     }
 }
