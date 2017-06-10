@@ -42,6 +42,14 @@ class VotingAppTest extends TestCase
         Artisan::call('db:seed');
     }
 
+    protected function squashedDbSetup()
+    {
+        config(['vote.categories.squash' => true]);
+
+        Artisan::call('migrate:refresh');
+        Artisan::call('db:seed');
+    }
+
     protected function retrieveDefaultProperties()
     {
         $this->category = Category::find(config('vote.test.default.categoryId'));

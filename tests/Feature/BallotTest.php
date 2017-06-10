@@ -22,6 +22,8 @@ class BallotTest extends VotingAppTest
      */
     public function test_GET_Ballot_SquashedCategories_AllFilmNamesReferenceCategory0()
     {
+        $this->squashedDbSetup();
+
         $this->withSession(['accessCodeId' => 1])
             ->get('ballot')
             ->assertSee('name="category-0-radios"')
@@ -67,7 +69,7 @@ class BallotTest extends VotingAppTest
      */
     public function test_GET_Ballot_FilmHasSquashedVote_InputIsAlreadyChecked()
     {
-        config(['vote.categories.squash' => true]);
+        $this->squashedDbSetup();
 
         $vote = new Vote;
         $vote->film_id = $this->film->id;
@@ -85,8 +87,6 @@ class BallotTest extends VotingAppTest
      */
     public function test_GET_Ballot_FilmHasVote_InputIsAlreadyChecked()
     {
-        config(['vote.categories.squash' => false]);
-
         $vote = new Vote;
         $vote->film_id = $this->film->id;
         $vote->category_id = $this->category->id;
