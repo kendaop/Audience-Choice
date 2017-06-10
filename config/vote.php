@@ -8,7 +8,7 @@ return [
          * If set to 'true', categories will be used for visual display only.
          * Voting will be treated as if all categories were combined into one.
          */
-        'squash'   => true,
+        'squash'   => env('SQUASH_CATEGORIES', false),
     ],
 
     'messages' => [

@@ -15,7 +15,7 @@ class FilmSeeder extends Seeder
         $films = config('seeds.films', []);
 
         if(empty($films)) {
-            factory(Film::class, 50)->create();
+            factory(Film::class, 30)->create();
         } else {
             foreach ($films as $title => $description) {
                 factory(App\Film::class)->create([

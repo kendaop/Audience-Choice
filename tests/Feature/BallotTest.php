@@ -22,6 +22,8 @@ class BallotTest extends VotingAppTest
      */
     public function test_GET_Ballot_SquashedCategories_AllFilmNamesReferenceCategory0()
     {
+        $this->squashedDbSetup();
+
         $this->withSession(['accessCodeId' => 1])
             ->get('ballot')
             ->assertSee('name="category-0-radios"')
@@ -41,7 +43,7 @@ class BallotTest extends VotingAppTest
      */
     public function test_GET_Ballot_AccessCodeInSession_200()
     {
-        $this->withSession(['accessCodeId' => 1])
+        $this->withSession(['accessCodeId' => $this->accessCode->id])
             ->get('ballot')
             ->assertStatus(200);
     }
@@ -60,6 +62,68 @@ class BallotTest extends VotingAppTest
                 $response->assertSeeText(htmlentities($film->title, ENT_QUOTES));
             });
         });
+    }
+
+    /**
+     * @group ballot
+     */
+    public function test_GET_Ballot_UnsquashedCategories_AllCategoriesForAccessCodeAreVisible()
+    {
+        $response = $this->withSession(['accessCodeId' => $this->accessCode->id])->get('ballot');
+
+        Category::all()->each(function($category) use ($response) {
+            $response->assertSeeText($category->name);
+        });
+    }
+
+    /**
+     * @group ballot
+     */
+    public function test_GET_Ballot_SquashedCategories_AllCategoriesForAccessCodeAreVisible()
+    {
+        $this->squashedDbSetup();
+
+        $response = $this->withSession(['accessCodeId' => $this->accessCode->id])->get('ballot');
+
+        Category::all()->each(function($category) use ($response) {
+            if($category->name !== 'Squashed') {
+                $response->assertSeeText($category->name);
+            }
+        });
+    }
+
+    /**
+     * @group ballot
+     */
+    public function test_GET_Ballot_FilmHasSquashedVote_InputIsAlreadyChecked()
+    {
+        $this->squashedDbSetup();
+
+        $vote = new Vote;
+        $vote->film_id = $this->film->id;
+        $vote->category_id = 0;
+        $vote->access_code_id = $this->accessCode->id;
+        $vote->save();
+
+        $this->withSession(['accessCodeId' => $this->accessCode->id])
+            ->get('ballot')
+            ->assertSee('input type="radio" name="category-0-radios" value="' . $this->film->id . '" checked');
+    }
+
+    /**
+     * @group ballot
+     */
+    public function test_GET_Ballot_FilmHasVote_InputIsAlreadyChecked()
+    {
+        $vote = new Vote;
+        $vote->film_id = $this->film->id;
+        $vote->category_id = $this->category->id;
+        $vote->access_code_id = $this->accessCode->id;
+        $vote->save();
+
+        $this->withSession(['accessCodeId' => $this->accessCode->id])
+            ->get('ballot')
+            ->assertSee('input type="radio" name="category-' . $this->category->id . '-radios" value="' . $this->film->id . '" checked');
     }
 
     /**

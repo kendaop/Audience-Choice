@@ -46,11 +46,11 @@ class VoteController extends Controller
     public function submitBallot(Request $request)
     {
         $requestKeys = array_keys($request->all());
-        $selectedElems = preg_grep('/^category-[0-9]+-film$/', $requestKeys);
+        $selectedElems = preg_grep('/^category-[0-9]+-radios$/', $requestKeys);
 
         foreach ($selectedElems as $elem) {
             $categoryId = [];
-            preg_match('/^category-([0-9]+)-film$/', $elem, $categoryId);
+            preg_match('/^category-([0-9]+)-radios/', $elem, $categoryId);
 
             // Gets any current vote for this Access Code and Category
             $currentVotes = Vote::where('category_id', $categoryId[1])
