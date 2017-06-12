@@ -12,9 +12,13 @@ return [
     ],
 
     'messages' => [
-        'welcome'           => env('WELCOME_MESSAGE', ''),
+        'welcome'           => env('WELCOME_MESSAGE', 'Welcome!'),
         'invalidSession'    => env('INVALID_SESSION_MESSAGE', 'Something went wrong. Please try again.'),
         'invalidAccessCode' => env('INVALID_CODE_MESSAGE', 'Invalid Access Code')
+    ],
+
+    'branding' => [
+        'logo' => env('MAIN_LOGO')
     ],
 
     'test' => [

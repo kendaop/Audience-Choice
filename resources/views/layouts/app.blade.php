@@ -12,10 +12,23 @@
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container">
+    @section('branding')
+    @show
+</div>
+
+<div class="container">
+    @section('welcome')
+    @show
+</div>
+
+<div class="container">
     @section('notification')
     @show
-    @section('container')
+</div>
+
+<div class="container">
+    @section('body')
     @show
 </div>
 <div class="footer">

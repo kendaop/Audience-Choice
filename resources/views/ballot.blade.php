@@ -2,7 +2,7 @@
 
 @section('title', 'Ballot')
 
-@section('container')
+@section('body')
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1">
             <form action="/submitBallot" id="ballot" method="post">
