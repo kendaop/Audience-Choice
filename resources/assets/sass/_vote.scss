@@ -1,3 +1,11 @@
+$offWhite: #f8f8ff;
+$peach: #f0d0c0;
+
+body {
+  padding-top: 10px;
+  background-color: $offWhite;
+}
+
 .panel-title-film a, .panel-title-category a {
   color: #000000;
   text-decoration: none;
@@ -11,4 +19,12 @@ input + .panel-title-film {
   margin: 5px 5px -10px 5px;
   float: left;
   height: 140px;
+}
+
+input {
+  font-family: sans-serif;
+}
+
+.alert-warning {
+  border-color: $peach;
 }

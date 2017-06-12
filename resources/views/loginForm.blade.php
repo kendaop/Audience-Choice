@@ -1,17 +1,24 @@
-@php
-
-@endphp
 
 @extends('layouts.app')
 
 @section('title', 'Login')
 
+@section('branding')
+    @if ($logoPath)
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <img class="img-responsive" src="{{$logoPath}}"/>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+    @endif
+@endsection
+
 @section('notification')
-    {{config('vote.messages.hello')}}
     @if($message)
         <div class="row">
-            <div class="col-xs-6 col-xs-offset-3 alert alert-{{$messageClass}}">
-                <p>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 alert alert-{{$messageClass}}">
+                <p class="text-center">
                     {{$message}}
                 </p>
             </div>
@@ -19,15 +26,34 @@
     @endif
 @endsection
 
-@section('container')
-    <div><p class="bg-warning">{!! $welcome !!}Enter your Access Code in the box below to vote for your favorite films!</p></div>
+@section('welcome')
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 alert alert-warning">
+            <p class="text-center">{!! $welcome !!}</p>
+        </div>
+    </div>
+@endsection
+
+@section('body')
     <form action="/login" method="POST">
         {{ csrf_field() }}
         <div class="form-group">
-            <label for="accessCodeInput">Access Code</label>
-            <input type="text" class="form-control" id="accessCode" name="accessCode" placeholder="Access Code">
+            <div class="row">
+                <div class="col-xs-offset-1 col-sm-offset-4">
+                    <label for="accessCodeInput">Access Code</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
+                    <input type="text" class="form-control" id="accessCode" name="accessCode" placeholder="Access Code">
+                </div>
+            </div>
         </div>
         <input type="hidden" id="timestamp" name="timestamp">
-        <button type="submit" class="btn btn-primary" id="accessCodeSubmit">Vote!</button>
+        <div class="row">
+            <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
+                <button type="submit" class="btn btn-primary col-xs-12" id="accessCodeSubmit">Vote!</button>
+            </div>
+        </div>
     </form>
 @endsection
