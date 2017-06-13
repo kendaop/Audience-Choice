@@ -15,11 +15,20 @@ body {
       transition: all 0.25s ease-out;
     }
 
-    &[aria-expanded="true"] .glyphicon {
-      -ms-transform: rotate(-90deg);
-      -webkit-transform: rotate(-90deg);
-      transform: rotate(-90deg);
+    &[aria-expanded="true"] {
+      &.category .glyphicon {
+        -ms-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+      }
+
+      &.film .glyphicon {
+        -ms-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+      }
     }
+
   }
 
   .panel-title-category {

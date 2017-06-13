@@ -2,7 +2,7 @@
 @if(!$films->isEmpty())
     <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading-{{$category->id}}">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$category->id}}" aria-expanded="false" aria-controls="collapse-{{$category->id}}">
+                <a role="button" class="category" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$category->id}}" aria-expanded="false" aria-controls="collapse-{{$category->id}}">
                     <div class="row">
                         <div class="col-xs-10">
                             <h3 class="panel-title-category">
