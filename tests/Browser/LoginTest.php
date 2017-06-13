@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\Browser\Pages\Ballot;
 use Tests\Browser\Pages\Vote;
 use Tests\DuskTestCase;
@@ -9,13 +10,11 @@ use Laravel\Dusk\Browser;
 
 class LoginTest extends DuskTestCase
 {
+    use DatabaseMigrations;
 
-    public function setUp()
-    {
-        parent::setUp();
-        $this->retrieveDefaultProperties();
-    }
-
+    /**
+     * @group login
+     */
     public function test_Login_ValidAccessCode_RedirectedToBallot()
     {
         $this->browse(function (Browser $browser) {
@@ -23,6 +22,9 @@ class LoginTest extends DuskTestCase
         });
     }
 
+    /**
+     * @group login
+     */
     public function test_Login_ValidAccessCode_CanSeeCategoryHeadings()
     {
         $this->browse(function (Browser $browser) {
@@ -30,17 +32,13 @@ class LoginTest extends DuskTestCase
         });
     }
 
+    /**
+     * @group login
+     */
     public function test_Login_InvalidAccessCode_RedirectedToVote()
     {
         $this->browse(function (Browser $browser) {
             $this->logIn($browser, 'BAD_ACCESS_CODE')->on(new Vote);
         });
-    }
-
-    protected function logIn(Browser $browser, $accessCode)
-    {
-        return $browser->visit(new Vote)
-            ->type('accessCode', $accessCode)
-            ->click('submitButton');
     }
 }
