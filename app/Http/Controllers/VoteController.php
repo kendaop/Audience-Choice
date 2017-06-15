@@ -11,6 +11,7 @@ class VoteController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('rateLimiting')->only('login');
         $this->middleware('accessCode')->only('login');
         $this->middleware('sessionRefresh')->only('loginForm');
         $this->middleware('verifySession')->only('ballot');
