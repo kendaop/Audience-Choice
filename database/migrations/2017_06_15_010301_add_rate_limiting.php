@@ -30,6 +30,6 @@ class AddRateLimiting extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rate_limiting');
+        Schema::dropIfExists('login_attempts');
     }
 }
