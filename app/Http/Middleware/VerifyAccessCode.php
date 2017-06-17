@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\LoginAttempt;
 use Closure;
 use Illuminate\Support\Facades\Hash;
 use App\AccessCode;
@@ -24,6 +25,9 @@ class VerifyAccessCode
                 'messageType' => 'exception'
             ]);
         }
+
+        $loginAttempt = LoginAttempt::find($request->ip());
+        $loginAttempt->resetAttempts();
 
         // Generate and store a token to identify a logged-in user
         $request->session()->put('sessionToken', Hash::make("$request->accessCode:{$request->session()->getId()}"));
