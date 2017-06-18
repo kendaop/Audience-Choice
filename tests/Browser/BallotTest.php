@@ -105,6 +105,7 @@ class BallotTest extends DuskTestCase
             $this->logIn($browser, $this->accessCode->code)
                 ->on(new Ballot)
                 ->click(self::CATEGORY_SELECTOR_ONE)
+                ->pause(300)
                 ->click(self::FILM_SELECTOR_ONE)
                 ->pause(300)
                 ->click(self::FILM_SELECTOR_TWO)

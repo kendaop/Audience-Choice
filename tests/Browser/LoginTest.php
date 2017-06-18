@@ -41,4 +41,20 @@ class LoginTest extends DuskTestCase
             $this->logIn($browser, 'BAD_ACCESS_CODE')->on(new Vote);
         });
     }
+
+    /**
+     * @group login
+     */
+    public function test_Login_TypeText_InputCapitalized()
+    {
+        $this->browse(function(Browser $browser) {
+            $text = 'myAccessCode123';
+
+            $browser->visit('vote')
+                ->pause(5000)
+                ->type('accessCode', $text)
+                ->assertInputValue('accessCode', strtoupper($text))
+                ->assertInputValueIsNot('accessCode', $text);
+        });
+    }
 }
