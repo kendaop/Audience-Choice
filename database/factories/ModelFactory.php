@@ -14,7 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\AccessCode::class, function (Faker\Generator $faker) {
     return [
-        'code' => $faker->unique()->ean8,
+        'code' => substr(strtoupper($faker->unique()->md5), 0, 10),
     ];
 });
 

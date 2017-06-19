@@ -1,7 +1,19 @@
-
 @extends('layouts.app')
 
 @section('title', 'Login')
+
+@section('header-includes')
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('input#accessCode').on('keypress', function (event) {
+                if (null !== String.fromCharCode(event.which).match(/[a-z]/g)) {
+                    event.preventDefault();
+                    $(this).val($(this).val() + String.fromCharCode(event.which).toUpperCase());
+                }
+            });
+        });
+    </script>
+@endsection
 
 @section('branding')
     @if ($logoPath)
