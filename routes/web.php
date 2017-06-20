@@ -11,10 +11,6 @@
 |
 */
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
-
     Route::get('/vote', 'VoteController@loginForm')->name('vote');
 
     Route::get('/ballot', 'VoteController@ballot')->name('ballot');

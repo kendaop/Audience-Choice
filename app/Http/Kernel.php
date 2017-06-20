@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'accessCode' => \App\Http\Middleware\VerifyAccessCode::class,
         'verifySession' => \App\Http\Middleware\VerifySession::class,
         'sessionRefresh' => \App\Http\Middleware\SessionRefresh::class,
+        'rateLimiting' => \App\Http\Middleware\RateLimiting::class
     ];
 }

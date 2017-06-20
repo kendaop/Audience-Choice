@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AccessCode;
-use App\Category;
+use Illuminate\Support\Facades\File;
 use App\Vote;
 use Illuminate\Http\Request;
 
@@ -11,6 +11,7 @@ class VoteController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('rateLimiting')->only('login');
         $this->middleware('accessCode')->only('login');
         $this->middleware('sessionRefresh')->only('loginForm');
         $this->middleware('verifySession')->only('ballot');
@@ -21,11 +22,13 @@ class VoteController extends Controller
         $welcome = config('vote.messages.welcome') . (empty(config('vote.messages.welcome')) ? '' : '<br/>');
         $message = session('message');
         $messageClass = (session('messageType') === 'exception') ? 'danger' : 'success';
+        $logoPath = config('vote.branding.logo');
 
         return view('loginForm', [
             'welcome' => $welcome,
             'message' => $message,
-            'messageClass' => $messageClass
+            'messageClass' => $messageClass,
+            'logoPath' => File::exists(base_path() . '/public/' . $logoPath) ? asset($logoPath) : null
         ]);
     }
 
