@@ -3,6 +3,12 @@
 return [
 
     'app' => [
+
+        /**
+         * Determines if users are allowed to change their votes, once they've been cast.
+         */
+        'allowReVoting' => env('ALLOW_RE_VOTING', false),
+
         /**
          * The number of failed login attempts before a user is locked out.
          */
