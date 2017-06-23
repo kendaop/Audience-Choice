@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\LoginAttempt;
+use App\Vote;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -181,6 +182,67 @@ class LoginTest extends VotingAppTest
 
         $this->assertEquals(0, LoginAttempt::where('attempts', config('vote.app.maxLoginAttempts'))->count());
     }
+
+    /**
+     * @group login
+     */
+    public function test_Login_AccessCodeHasVoteNoReVoting_RedirectedToVote()
+    {
+        config(['vote.app.allowReVoting' => false]);
+
+        $vote = new Vote;
+        $vote->film_id = $this->film->id;
+        $vote->category_id = $this->category->id;
+        $vote->access_code_id = $this->accessCode->id;
+        $vote->save();
+
+        $this->post('login', [
+            '_token' => csrf_token(),
+            'accessCode' => $this->accessCode->code
+        ])->assertRedirect('vote');
+    }
+
+    /**
+     * @group login
+     */
+    public function test_Login_AccessCodeHasVoteNoReVoting_RedirectedWithMessage()
+    {
+        config(['vote.app.allowReVoting' => false]);
+
+        $vote = new Vote;
+        $vote->film_id = $this->film->id;
+        $vote->category_id = $this->category->id;
+        $vote->access_code_id = $this->accessCode->id;
+        $vote->save();
+
+
+        $response = $this->post('login', [
+            '_token' => csrf_token(),
+            'accessCode' => $this->accessCode->code
+        ]);
+
+        $this->followRedirect($response)->assertSeeText(config('vote.messages.invalidAccessCode'));
+    }
+
+    /**
+     * @group login
+     */
+    public function test_Login_AccessCodeHasVoteReVotingAllowed_RedirectedToBallot()
+    {
+        config(['vote.app.allowReVoting' => true]);
+
+        $vote = new Vote;
+        $vote->film_id = $this->film->id;
+        $vote->category_id = $this->category->id;
+        $vote->access_code_id = $this->accessCode->id;
+        $vote->save();
+
+        $this->post('login', [
+            '_token' => csrf_token(),
+            'accessCode' => $this->accessCode->code
+        ])->assertRedirect('ballot');
+    }
+
 
     protected function followRedirect(TestResponse $response)
     {
