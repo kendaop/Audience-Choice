@@ -30,7 +30,7 @@
     </div>
     <div id="film-collapse-{{$category->id}}-{{$film->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="category-{{$categoryId}}-film-{{$film->id}}-heading">
         <div class="poster-thumbnail">
-            <img src="{{asset('img/manos-poster.jpg')}}" />
+            <img src="{{asset("img/posters/$film->id.jpg")}}" />
         </div>
         <div class="panel-body">
             {{$film->description}}
