@@ -17,4 +17,9 @@ class AccessCode extends Model
     {
         return $this->hasMany('App\Vote');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
