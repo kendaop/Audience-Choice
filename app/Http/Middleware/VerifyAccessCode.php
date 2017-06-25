@@ -18,14 +18,16 @@ class VerifyAccessCode
      */
     public function handle($request, Closure $next)
     {
-        $result = AccessCode::where('code', $request->accessCode)->first();
-        if(empty($result)) {
+        $result = AccessCode::with('votes')->where('code', $request->accessCode)->first();
+
+        if(empty($result) || (!config('vote.app.allowReVoting') && $result->votes->isNotEmpty())) {
             return redirect('/vote')->with([
                 'message' => config('vote.messages.invalidAccessCode'),
                 'messageType' => 'exception'
             ]);
         }
 
+        // Reset the rate-limiting count for this IP address.
         $loginAttempt = LoginAttempt::find($request->ip());
         $loginAttempt->resetAttempts();
 

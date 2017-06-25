@@ -13,17 +13,29 @@ class FilmTagSeeder extends Seeder
      */
     public function run()
     {
-        $filmTags = config('seeds.filmTags', []);
+        $films = config('seeds.films', []);
+        $tags = config('seeds.tags', []);
 
-        if (empty($filmTags)) {
+        if (empty($films)) {
             $tagCount = Tag::all()->count();
 
             Film::all()->each(function ($film) use ($tagCount) {
                 $film->tags()->attach([random_int(1, $tagCount)]);
             });
         } else {
-            Film::all()->each(function($film) use($filmTags) {
-                $film->tags()->attach($filmTags[$film->id]);
+            $dbTags = Tag::all();
+            Film::all()->each(function($film) use($films, $tags, $dbTags) {
+                if(in_array($film->title, array_keys($films)) && (count($films[$film->title]['tags']) > 0)) {
+                    foreach($films[$film->title]['tags'] as $tag) {
+                        if(is_int($tag)) {
+                            $film->tags()->attach($tag);
+                        }
+
+                        if(is_string($tag)) {
+                            $film->tags()->attach($dbTags->where('name',  $tag)->first()->id);
+                        }
+                    }
+                }
             });
         }
     }

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FilmTagSeeder::class);
         $this->call(AccessCodeSeeder::class);
         $this->call(CategoryAccessCodeSeeder::class);
+        $this->call(UserSeeder::class);
         //$this->call(VoteSeeder::class);
     }
 }

@@ -14,7 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\AccessCode::class, function (Faker\Generator $faker) {
     return [
-        'code' => substr(strtoupper($faker->unique()->md5), 0, 10),
+        'code' => substr(strtoupper($faker->unique()->md5), 0, 10)
     ];
 });
 
@@ -51,6 +51,15 @@ $factory->define(App\Vote::class, function (Faker\Generator $faker) {
              return factory(App\AccessCode::class)->create()->id;
         },
         'weight' => $faker->randomNumber(),
+    ];
+});
+
+$factory->define(App\User::class, function(Faker\Generator $faker) {
+    return [
+        'first_name' => $faker->firstName,
+        'middle_name' => null,
+        'last_name' => $faker->lastName,
+        'email' => $faker->email
     ];
 });
 
