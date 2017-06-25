@@ -47,7 +47,7 @@ class VoteTest extends VotingAppTest
      */
     public function test_GET_Vote_MainLogoExists_ImageDisplayed()
     {
-        $assetPath = 'img/manos-poster.jpg';
+        $assetPath = 'img/posters/1.jpg';
 
         config(['vote.branding.logo' => $assetPath]);
 
