@@ -19,9 +19,9 @@ class VoteController extends Controller
 
     public function loginForm()
     {
-        $welcome = config('vote.messages.welcome') . (empty(config('vote.messages.welcome')) ? '' : '<br/>');
-        $message = session('message');
-        $messageClass = (session('messageType') === 'exception') ? 'danger' : 'success';
+        $welcome = config('vote.messages.welcome');
+        $message = empty(session('message')) ? $welcome : session('message');
+        $messageClass = (session('messageType') === 'exception') ? 'danger' : (session('messageType') === 'success' ? 'success' : 'warning');
         $logoPath = config('vote.branding.logo');
 
         return view('loginForm', [
@@ -77,7 +77,10 @@ class VoteController extends Controller
             }
         }
 
-        return redirect()->route('vote');
+        return redirect('vote')->with([
+            'message' => config('vote.messages.voteCast'),
+            'messageType' => 'success'
+        ]);
     }
 
     public function login()
