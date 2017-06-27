@@ -77,7 +77,7 @@ class VoteController extends Controller
             }
         }
 
-        return redirect('/vote');
+        return redirect()->route('vote');
     }
 
     public function login()

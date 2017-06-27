@@ -13,8 +13,9 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\AccessCode::class, function (Faker\Generator $faker) {
+    $array = array_merge(range('0','9'), range('A', 'Z'));
     return [
-        'code' => substr(strtoupper($faker->unique()->md5), 0, 10)
+        'code' => implode($faker->randomElements($array, 8, true))
     ];
 });
 

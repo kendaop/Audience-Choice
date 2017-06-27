@@ -17,6 +17,7 @@ class CategoryAccessCodeSeeder extends Seeder
         $index = 0;
 
         AccessCode::all()->each(function ($accessCode) use ($categoryIds, &$index) {
+            // Attach the first AccessCode to all Categories
             if ($accessCode->id === 1) {
                 $accessCode->categories()->attach(range(1, count($categoryIds)));
             } else {
