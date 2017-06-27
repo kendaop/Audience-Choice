@@ -40,7 +40,7 @@ class RateLimiting
             $loginAttempt->save();
 
             if ($loginAttempt->attempts > config('vote.app.maxLoginAttempts')) {
-                return redirect('vote')->with([
+                return redirect()->route('vote')->with([
                     'message' => config('vote.messages.rateLimited'),
                     'messageType' => 'exception'
                 ]);

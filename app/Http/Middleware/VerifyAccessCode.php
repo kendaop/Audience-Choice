@@ -21,7 +21,7 @@ class VerifyAccessCode
         $result = AccessCode::with('votes')->where('code', $request->accessCode)->first();
 
         if(empty($result) || (!config('vote.app.allowReVoting') && $result->votes->isNotEmpty())) {
-            return redirect('/vote')->with([
+            return redirect()->route('vote')->with([
                 'message' => config('vote.messages.invalidAccessCode'),
                 'messageType' => 'exception'
             ]);
