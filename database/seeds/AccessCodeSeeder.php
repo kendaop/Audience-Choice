@@ -11,6 +11,6 @@ class AccessCodeSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\AccessCode::class, 200)->create();
+        factory(App\AccessCode::class, 400)->create();
     }
 }
