@@ -18,7 +18,7 @@
 @section('branding')
     @if ($logoPath)
         <div class="row">
-            <div class="col-xs-8 col-xs-offset-2">
+            <div class="col-xs-10 col-xs-offset-1">
                 <img class="img-responsive" src="{{$logoPath}}"/>
             </div>
         </div>
@@ -51,19 +51,19 @@
         {{ csrf_field() }}
         <div class="form-group">
             <div class="row">
-                <div class="col-xs-offset-1 col-sm-offset-4">
+                <div class="col-xs-offset-1 col-sm-offset-2">
                     <label for="accessCodeInput">Access Code</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
+                <div class="col-xs-10 col-sm-6 col-xs-offset-1 col-sm-offset-3">
                     <input type="text" class="form-control" id="accessCode" name="accessCode" placeholder="Access Code">
                 </div>
             </div>
         </div>
         <input type="hidden" id="timestamp" name="timestamp">
         <div class="row">
-            <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
+            <div class="col-xs-10 col-sm-6 col-xs-offset-1 col-sm-offset-3">
                 <button type="submit" class="btn btn-primary col-xs-12" id="accessCodeSubmit">Vote!</button>
             </div>
         </div>
