@@ -18,11 +18,6 @@
 </div>
 
 <div class="container">
-    @section('welcome')
-    @show
-</div>
-
-<div class="container">
     @section('notification')
     @show
 </div>
