@@ -69,18 +69,6 @@ class VoteTest extends VotingAppTest
     /**
      * @group vote
      */
-    public function test_GET_Vote_MainLogoDoesNotExist_NoImageDisplayed()
-    {
-        $assetPath = 'img/NON-EXISTENT.jpg';
-
-        config(['vote.branding.logo' => $assetPath]);
-
-        $this->get('vote')->assertDontSee(asset($assetPath));
-    }
-
-    /**
-     * @group vote
-     */
     public function test_GET_Vote_SuccessMessagePassed_SuccessMessageDisplayed()
     {
         $message = 'Success!';
