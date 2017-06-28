@@ -22,13 +22,13 @@ class VoteController extends Controller
         $welcome = config('vote.messages.welcome');
         $message = empty(session('message')) ? $welcome : session('message');
         $messageClass = (session('messageType') === 'exception') ? 'danger' : (session('messageType') === 'success' ? 'success' : 'warning');
-        $logoPath = config('vote.branding.logo');
+        $logoPath = get_asset(config('vote.branding.logo'));
 
         return view('loginForm', [
             'welcome' => $welcome,
             'message' => $message,
             'messageClass' => $messageClass,
-            'logoPath' => File::exists(base_path() . '/public/' . $logoPath) ? asset($logoPath) : null
+            'logoPath' => $logoPath
         ]);
     }
 

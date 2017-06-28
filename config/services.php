@@ -35,4 +35,23 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cloudfront Configuration
+    |--------------------------------------------------------------------------
+    |
+    | You can enable or disable Cloudfront access for your assets here. If
+    | enabled, assets will be pulled from Cloudfront instead of the 'public'
+    | directory.
+    |
+    | Method options: 'http', 'https'
+    |
+    */
+
+    'cloudfront' => [
+        'enabled' => env('CLOUDFRONT_ENABLED', false),
+        'hostname' => env('CLOUDFRONT_HOSTNAME'),
+        'method' => env('CLOUDFRONT_METHOD', 'http')
+    ]
+
 ];
