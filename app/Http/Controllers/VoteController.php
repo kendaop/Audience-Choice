@@ -19,16 +19,16 @@ class VoteController extends Controller
 
     public function loginForm()
     {
-        $welcome = config('vote.messages.welcome') . (empty(config('vote.messages.welcome')) ? '' : '<br/>');
-        $message = session('message');
-        $messageClass = (session('messageType') === 'exception') ? 'danger' : 'success';
-        $logoPath = config('vote.branding.logo');
+        $welcome = config('vote.messages.welcome');
+        $message = empty(session('message')) ? $welcome : session('message');
+        $messageClass = (session('messageType') === 'exception') ? 'danger' : (session('messageType') === 'success' ? 'success' : 'warning');
+        $logoPath = get_asset(config('vote.branding.logo'));
 
         return view('loginForm', [
             'welcome' => $welcome,
             'message' => $message,
             'messageClass' => $messageClass,
-            'logoPath' => File::exists(base_path() . '/public/' . $logoPath) ? asset($logoPath) : null
+            'logoPath' => $logoPath
         ]);
     }
 
@@ -77,7 +77,10 @@ class VoteController extends Controller
             }
         }
 
-        return redirect('/vote');
+        return redirect('vote')->with([
+            'message' => config('vote.messages.voteCast'),
+            'messageType' => 'success'
+        ]);
     }
 
     public function login()

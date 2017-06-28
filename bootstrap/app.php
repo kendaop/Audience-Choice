@@ -11,6 +11,27 @@
 |
 */
 
+if(! function_exists('get_asset')) {
+
+    /**
+     * Generate an asset path for the application or Cloudfront, automatically.
+     * @param string $path
+     * @param bool   $secure
+     * @return string
+     */
+    function get_asset($path, $secure = null) {
+        if(config('services.cloudfront.enabled')) {
+            return config('services.cloudfront.method') .
+                '://' .
+                config('services.cloudfront.hostname') .
+                '/' .
+                $path;
+        }
+
+        return asset($path, $secure);
+    }
+}
+
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );

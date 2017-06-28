@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if($exception instanceof TokenMismatchException) {
-            return redirect('vote')->with([
+            return redirect()->route('vote')->with([
                 'message' => config('vote.messages.invalidSession'),
                 'messageType' => 'exception'
             ]);
@@ -68,7 +68,7 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect('/vote')->with([
+        return redirect()->route('vote')->with([
             'message' => $exception->getMessage(),
             'messageType' => 'exception'
         ]);

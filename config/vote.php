@@ -36,6 +36,7 @@ return [
 
     'messages' => [
         'welcome'           => env('WELCOME_MESSAGE', 'Welcome!'),
+        'voteCast'          => 'Thank you! Your vote has been cast.',
         'invalidSession'    => env('SOMETHING_WENT_WRONG_MESSAGE', 'Something went wrong. Please try again.'),
         'invalidAccessCode' => env('INVALID_CODE_MESSAGE', 'Invalid Access Code'),
         'rateLimited'       => env('MAX_LOGIN_ATTEMPTS_MESSAGE', 'Max login attempts reached. Please wait a while before attempting again.')

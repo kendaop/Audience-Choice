@@ -18,7 +18,7 @@ class VerifySession
     public function handle($request, Closure $next)
     {
         if(!session()->has('accessCodeId')) {
-            return redirect('vote')->with([
+            return redirect()->route('vote')->with([
                 'message' => config('vote.messages.invalidSession'),
                 'messageType' => 'exception'
             ]);
